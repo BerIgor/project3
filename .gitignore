@@ -28,3 +28,6 @@ tobii_bench/tobii_bench/Properties/AssemblyInfo.cs
 tobii_bench/tobii_bench/obj/Debug/tobii_bench.Properties.Resources.resources
 tobii_bench/tobii_bench/bin/Debug/tobii_bench.exe
 tobii_bench/tobii_bench.sln
+tobii_bench/tobii_bench/obj/Debug/tobii_bench.Canvas.resources
+tobii_bench/tobii_bench/obj/Debug/tobii_bench.exe
+tobii_bench/tobii_bench/bin/Debug/data/output.txt

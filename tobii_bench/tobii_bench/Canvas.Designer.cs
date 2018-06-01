@@ -1,6 +1,6 @@
-namespace tobii_bench
+﻿namespace tobii_bench
 {
-    partial class Form1
+    partial class Canvas
     {
         /// <summary>
         /// Required designer variable.
@@ -30,14 +30,14 @@ namespace tobii_bench
         {
             this.SuspendLayout();
             // 
-            // Form1
+            // Canvas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Name = "Canvas";
+            this.Text = "Canvas";
+            this.Load += new System.EventHandler(this.Canvas_Load);
             this.ResumeLayout(false);
 
         }
@@ -45,4 +45,3 @@ namespace tobii_bench
         #endregion
     }
 }
-
