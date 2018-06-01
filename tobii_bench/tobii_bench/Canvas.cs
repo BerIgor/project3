@@ -61,8 +61,11 @@ namespace tobii_bench
         {
             Erase();
             lastDrawPoint = drawPoint;
+            int rectCornerX = drawPoint.X - this.circleRadius;
+            int rectCornerY = drawPoint.Y - this.circleRadius;
+
             System.Diagnostics.Debug.WriteLine("Next draw point: " + drawPoint.X.ToString() + "," + drawPoint.Y.ToString());
-            myGraphics.FillEllipse(myBrush, drawPoint.X, drawPoint.Y, this.circleDiameter, this.circleDiameter);
+            myGraphics.FillEllipse(myBrush, rectCornerX, rectCornerY, this.circleDiameter, this.circleDiameter);
         }
 
 

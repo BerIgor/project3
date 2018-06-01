@@ -20,6 +20,8 @@ namespace tobii_bench
         private Hashtable indexHash;
         private Random random;
 
+        private double radius = 5.0;
+
         // A counter to stop randomizing indices
         private int counter;
 
@@ -28,7 +30,7 @@ namespace tobii_bench
             this.outputFile = outputFile;
             
             // Initialize the canvas with radius 5
-            this.canvas = new Canvas(5);
+            this.canvas = new Canvas((int)radius);
             canvas.MouseClick += this.OnCanvasMouseClick;
 
             // Initialize the points
@@ -39,7 +41,7 @@ namespace tobii_bench
 
             this.random = new Random();
 
-            counter = 1;
+            counter = 0;
         }
 
         public void StartDataCollection()
@@ -54,6 +56,11 @@ namespace tobii_bench
             // Save data
             Point drawPoint = canvas.GetLastDrawPoint();
             Point clickPoint = new Point(e.X, e.Y);
+            if (!CheckClickPoint(drawPoint, clickPoint))
+            {
+                return;
+            }
+
             RegisterData(drawPoint, clickPoint);
 
             // Draw a new circle
@@ -68,6 +75,7 @@ namespace tobii_bench
                 canvas.Close();
                 this.outputFile.Close();
                 Application.Exit();
+                return;
             }
 
             System.Diagnostics.Debug.WriteLine("Next point is: " + nextPoint.ToString());
@@ -78,6 +86,19 @@ namespace tobii_bench
         {
             //Write clickPoint to file
             outputFile.WriteLine(drawPoint.ToString() + " " + clickPoint.ToString());
+        }
+
+        private bool CheckClickPoint(Point targetPoint, Point clickPoint)
+        {
+
+            double distX = Math.Abs(targetPoint.X - clickPoint.X);
+            double distY = Math.Abs(targetPoint.Y - clickPoint.Y);
+            System.Diagnostics.Debug.WriteLine("distX,distY == " + distX.ToString() +","+distY.ToString());
+            if (Math.Pow(distX, 2) + Math.Pow(distY, 2) > Math.Pow(this.radius, 2))
+            {
+                return false;
+            }
+            return true;
         }
 
         // Returns the next point
@@ -99,6 +120,12 @@ namespace tobii_bench
             counter++;
             return points[nextIndex];
         }
+
+        private void Terminate()
+        {
+
+        }
+
 
         private void InitializePoints()
         {
