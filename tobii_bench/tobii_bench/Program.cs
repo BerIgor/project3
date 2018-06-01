@@ -19,6 +19,7 @@ namespace tobii_bench
 
         private Hashtable indexHash;
         private Random random;
+        private ITracker tracker;
 
         private double radius = 5.0;
 
@@ -41,6 +42,8 @@ namespace tobii_bench
 
             this.random = new Random();
 
+            this.tracker = new TobiiTracker();
+
             counter = 0;
         }
 
@@ -61,7 +64,8 @@ namespace tobii_bench
                 return;
             }
 
-            RegisterData(drawPoint, clickPoint);
+            Point gazePoint = tracker.GetGaze();
+            RegisterData(drawPoint, clickPoint, gazePoint);
 
             // Draw a new circle
             Point nextPoint = new Point();
@@ -82,12 +86,13 @@ namespace tobii_bench
             canvas.DrawCircle(nextPoint); // the canvas automatically erases the existing circle
         }
 
-        private void RegisterData(Point drawPoint, Point clickPoint)
+        private void RegisterData(Point drawPoint, Point clickPoint, Point gazePoint)
         {
             //Write clickPoint to file
-            outputFile.WriteLine(drawPoint.ToString() + " " + clickPoint.ToString());
+            outputFile.WriteLine(drawPoint.ToString() + " " + clickPoint.ToString() + " " + gazePoint.ToString());
         }
 
+        // Checks if the click point is within the drawn circle
         private bool CheckClickPoint(Point targetPoint, Point clickPoint)
         {
 
@@ -121,6 +126,7 @@ namespace tobii_bench
             return points[nextIndex];
         }
 
+        // TODO: Implement?
         private void Terminate()
         {
 
@@ -150,6 +156,7 @@ namespace tobii_bench
             string exeFolder = Path.GetDirectoryName(Application.ExecutablePath);
             string relativePath = "/data/output.txt";
             StreamWriter outputFile = new StreamWriter(exeFolder + relativePath);
+            outputFile.WriteLine("Point Coords | Click Coords | Gaze Coords");
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
