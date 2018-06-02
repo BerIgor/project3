@@ -49,6 +49,8 @@ namespace tobii_bench
 
         public void StartDataCollection()
         {
+            tracker.Calibrate();
+            //canvas.BringToFront();
             Application.Run(canvas);
         }
 

@@ -10,5 +10,6 @@ namespace tobii_bench
     interface ITracker
     {
         Point GetGaze();
+        void Calibrate();
     }
 }

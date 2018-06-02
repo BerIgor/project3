@@ -38,7 +38,11 @@ namespace tobii_bench
             return lastGaze;
         }
 
-
+        public void Calibrate()
+        {
+            //this.host.LaunchGuestCalibration();
+            this.host.Context.LaunchConfigurationTool(Tobii.Interaction.Framework.ConfigurationTool.Recalibrate, (data) => { });
+        }
 
         private void RegisterGaze(double X, double Y, double ts)
         {
