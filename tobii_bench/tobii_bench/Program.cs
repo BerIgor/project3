@@ -14,7 +14,7 @@ namespace tobii_bench
     class DataCollector
     {
         private Canvas canvas;
-        private Point[] points;
+        private List<Point> points;
         private StreamWriter outputFile;
 
         private Hashtable indexHash;
@@ -22,9 +22,9 @@ namespace tobii_bench
         private ITracker tracker;
 
         private double radius = 5.0;
+        private int rowCount = 3;
+        private int colCount = 5;
 
-        // A counter to stop randomizing indices
-        private int counter;
 
         public DataCollector(StreamWriter outputFile)
         {
@@ -35,7 +35,7 @@ namespace tobii_bench
             canvas.MouseClick += this.OnCanvasMouseClick;
 
             // Initialize the points
-            InitializePoints();
+            this.points = InitializePoints(this.canvas.Height, this.canvas.Width);
 
             // Initialize the hashtable
             indexHash = new Hashtable();
@@ -43,8 +43,6 @@ namespace tobii_bench
             this.random = new Random();
 
             this.tracker = new TobiiTracker();
-
-            counter = 0;
         }
 
         public void StartDataCollection()
@@ -69,21 +67,16 @@ namespace tobii_bench
             Point gazePoint = tracker.GetGaze();
             RegisterData(drawPoint, clickPoint, gazePoint);
 
-            // Draw a new circle
-            Point nextPoint = new Point();
-            try
+            // Create next point
+            if (points.Count == 0)
             {
-                nextPoint = GetNextPoint();
-            }
-            catch (InvalidOperationException ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.ToString());
+                System.Diagnostics.Debug.WriteLine("No more points. Terminating.");
                 canvas.Close();
                 this.outputFile.Close();
                 Application.Exit();
                 return;
             }
-
+            Point nextPoint = GetNextPoint();
             System.Diagnostics.Debug.WriteLine("Next point is: " + nextPoint.ToString());
             canvas.DrawCircle(nextPoint); // the canvas automatically erases the existing circle
         }
@@ -109,39 +102,32 @@ namespace tobii_bench
         }
 
         // Returns the next point
-        // Throws InvalidOperationException
         private Point GetNextPoint()
         {
-            if (counter >= this.points.Length)
+            if (this.points.Count == 0)
             {
-                System.Diagnostics.Debug.WriteLine("Reached max indices at: " + counter.ToString());
                 throw new InvalidOperationException("All indices used");
             }
-            int nextIndex = random.Next(0, this.points.Length);
-            while(indexHash.ContainsKey(nextIndex))
+            int nextIndex = random.Next(0, this.points.Count);
+            Point nextPoint = points[nextIndex];
+            points.RemoveAt(nextIndex);
+            return nextPoint;
+        }
+
+        private List<Point> InitializePoints(int height, int width)
+        {
+            List<Point> points = new List<Point>();
+            int heightInterval = (int)Math.Floor((double)height / (double)(this.rowCount+1));
+            int widthInterval = (int)Math.Floor((double)width / (double)(this.colCount+1));
+            foreach (int row in Enumerable.Range(1, this.rowCount))
             {
-                nextIndex = random.Next(0, this.points.Length);
+                foreach (int col in Enumerable.Range(1, this.colCount))
+                {
+                    Point newPoint = new Point(col * widthInterval, row * heightInterval);
+                    points.Add(newPoint);
+                }
             }
-            indexHash.Add(nextIndex, "done");
-
-            counter++;
-            return points[nextIndex];
-        }
-
-        // TODO: Implement?
-        private void Terminate()
-        {
-
-        }
-
-
-        private void InitializePoints()
-        {
-            Point point0 = new Point(100, 100);
-            Point point1 = new Point(200, 200);
-            Point point2 = new Point(300, 300);
-            Point point3 = new Point(400, 400);
-            points = new Point[4] { point0, point1, point2, point3 };
+            return points;
         }
 
     }
@@ -158,6 +144,7 @@ namespace tobii_bench
             string exeFolder = Path.GetDirectoryName(Application.ExecutablePath);
             string relativePath = "/data/output.txt";
             StreamWriter outputFile = new StreamWriter(exeFolder + relativePath);
+            outputFile.WriteLine("");
             outputFile.WriteLine("Point Coords | Click Coords | Gaze Coords");
 
             Application.EnableVisualStyles();
