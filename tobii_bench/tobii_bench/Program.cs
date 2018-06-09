@@ -14,6 +14,7 @@ namespace tobii_bench
     class DataCollector
     {
         private Canvas canvas;
+        private OptionsForm optionsForm;
         private List<Point> points;
         private StreamWriter outputFile;
 
@@ -25,6 +26,8 @@ namespace tobii_bench
         private int rowCount = 3;
         private int colCount = 5;
 
+        private bool drawError = false;
+
 
         public DataCollector(StreamWriter outputFile)
         {
@@ -33,6 +36,9 @@ namespace tobii_bench
             // Initialize the canvas with radius 5
             this.canvas = new Canvas((int)radius);
             canvas.MouseClick += this.OnCanvasMouseClick;
+
+            // Initialize the options GUI
+            this.optionsForm = new OptionsForm();
 
             // Initialize the points
             this.points = InitializePoints(this.canvas.Height, this.canvas.Width);
@@ -47,8 +53,17 @@ namespace tobii_bench
 
         public void StartDataCollection()
         {
-            tracker.Calibrate();
+
+            Application.Run(optionsForm);
+            if (optionsForm.calibrate == true)
+            {
+                tracker.Calibrate();
+            }
+            this.drawError = optionsForm.display_error;
+
             //canvas.BringToFront();
+            
+            
             Application.Run(canvas);
         }
 
@@ -66,6 +81,11 @@ namespace tobii_bench
 
             Point gazePoint = tracker.GetGaze();
             RegisterData(drawPoint, clickPoint, gazePoint);
+
+            if (this.drawError)
+            {
+
+            }
 
             // Create next point
             if (points.Count == 0)
