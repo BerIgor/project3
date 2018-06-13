@@ -1,4 +1,4 @@
-
+DATA:
 Point Coords | Click Coords | Gaze Coords
 {X=0,Y=0} {X=0,Y=1} {X=0,Y=0}
 {X=320,Y=270} {X=318,Y=269} {X=311,Y=310}

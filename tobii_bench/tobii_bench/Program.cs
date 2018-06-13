@@ -22,7 +22,7 @@ namespace tobii_bench
         private Random random;
         private ITracker tracker;
 
-        private double radius = 5.0;
+        private int radius = 25;
         private int rowCount = 3;
         private int colCount = 5;
 
@@ -34,11 +34,11 @@ namespace tobii_bench
             this.outputFile = outputFile;
             
             // Initialize the canvas with radius 5
-            this.canvas = new Canvas((int)radius);
+            this.canvas = new Canvas(radius);
             canvas.MouseClick += this.OnCanvasMouseClick;
 
             // Initialize the options GUI
-            this.optionsForm = new OptionsForm();
+            this.optionsForm = new OptionsForm(this.outputFile);
 
             // Initialize the points
             this.points = InitializePoints(this.canvas.Height, this.canvas.Width);
@@ -104,7 +104,7 @@ namespace tobii_bench
         private void RegisterData(Point drawPoint, Point clickPoint, Point gazePoint)
         {
             //Write clickPoint to file
-            outputFile.WriteLine(drawPoint.ToString() + " " + clickPoint.ToString() + " " + gazePoint.ToString());
+            outputFile.WriteLine(drawPoint.ToString() + "|" + clickPoint.ToString() + "|" + gazePoint.ToString());
         }
 
         // Checks if the click point is within the drawn circle
@@ -162,10 +162,11 @@ namespace tobii_bench
         static void Main()
         {
             string exeFolder = Path.GetDirectoryName(Application.ExecutablePath);
-            string relativePath = "/data/output.txt";
+            //string relativePath = "/data/output.txt";
+            string relativePath = "/data/session_";
+            relativePath += DateTime.Now.ToString("yyyyMMddHHmmss");
+            relativePath += ".txt";
             StreamWriter outputFile = new StreamWriter(exeFolder + relativePath);
-            outputFile.WriteLine("");
-            outputFile.WriteLine("Point Coords | Click Coords | Gaze Coords");
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
