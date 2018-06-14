@@ -38,8 +38,7 @@ namespace tobii_bench
             this.label2 = new System.Windows.Forms.Label();
             this.OkButton = new System.Windows.Forms.Button();
             this.Calibrate = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.screenComboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -47,7 +46,7 @@ namespace tobii_bench
             // GlassesCheckBox
             // 
             this.GlassesCheckBox.AutoSize = true;
-            this.GlassesCheckBox.Location = new System.Drawing.Point(12, 155);
+            this.GlassesCheckBox.Location = new System.Drawing.Point(12, 181);
             this.GlassesCheckBox.Name = "GlassesCheckBox";
             this.GlassesCheckBox.Size = new System.Drawing.Size(63, 17);
             this.GlassesCheckBox.TabIndex = 0;
@@ -122,25 +121,16 @@ namespace tobii_bench
             this.Calibrate.Text = "Calibrate";
             this.Calibrate.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // screenComboBox
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(12, 227);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(89, 17);
-            this.checkBox2.TabIndex = 13;
-            this.checkBox2.Text = "Display errors";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Igor\'s PC - 14\""});
-            this.comboBox1.Location = new System.Drawing.Point(81, 74);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 14;
+            this.screenComboBox.FormattingEnabled = true;
+            this.screenComboBox.Items.AddRange(new object[] {
+            "14\"",
+            "15\""});
+            this.screenComboBox.Location = new System.Drawing.Point(81, 74);
+            this.screenComboBox.Name = "screenComboBox";
+            this.screenComboBox.Size = new System.Drawing.Size(121, 21);
+            this.screenComboBox.TabIndex = 14;
             // 
             // label3
             // 
@@ -167,8 +157,7 @@ namespace tobii_bench
             this.ClientSize = new System.Drawing.Size(260, 293);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.screenComboBox);
             this.Controls.Add(this.Calibrate);
             this.Controls.Add(this.OkButton);
             this.Controls.Add(this.label2);
@@ -198,8 +187,7 @@ namespace tobii_bench
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button OkButton;
         private System.Windows.Forms.CheckBox Calibrate;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox screenComboBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
     }
