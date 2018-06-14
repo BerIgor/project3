@@ -15,7 +15,7 @@ import numpy as np
 try:
     output_file_path
 except NameError:
-    output_file_path = 'C:/Users/abinenfe/Downloads/roni_room.txt' # Default error file for now
+    output_file_path = 'C:/Users/abinenfe/Documents/Studies/Gaze Project - Git/project3/tobii_bench/roni_room.txt'
 
 with open(output_file_path) as f:
     output_lines = f.readlines()
@@ -95,6 +95,7 @@ for i in range(N):
     # TODO - In order to get error in mm, we need to install gi or receive actual screen size as input.
     #        gi - http://pygobject.readthedocs.io/en/latest/getting_started.html. screen size - https://askubuntu.com/questions/153549/how-to-detect-a-computers-physical-screen-size-in-gtk
     error_txt_y = GT[1]-int(ceil(point_to_gaze_error[i]))-2
+    print(point_to_gaze_error[i])
     cv2.putText(res_canvas, str(np.round(point_to_gaze_error[i],2)), (GT[0],error_txt_y), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, black, 1, cv2.LINE_AA)
     # Legend text
     cv2.putText(res_canvas, 'GT', (10, 30), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, green, 1, cv2.LINE_AA)
