@@ -2,10 +2,9 @@
 tobii_bench for tobii tracker evaluation
 
 ## tobii_bench
-### what you'll need
-__Tobii core software: https://tobiigaming.com/getstarted/ __
-
-This program uses Tobii Core SDK
+### What you'll need
+This program uses Tobii Core SDK:
+Tobii core software: https://tobiigaming.com/getstarted/
 
 ### How to run
 1. Calibrate the device (this is commented out in the program due to inconsistent behaviour)
