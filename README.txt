@@ -3,7 +3,8 @@ tobii_bench for tobii tracker evaluation
 
 ## tobii_bench
 ### what you'll need
-**Tobii core software: https://tobiigaming.com/getstarted/**
+__Tobii core software: https://tobiigaming.com/getstarted/ __
+
 This program uses Tobii Core SDK
 
 ### How to run
