@@ -33,7 +33,6 @@ namespace tobii_bench
         {
             this.outputFile = outputFile;
             
-            // Initialize the canvas with radius 5
             this.canvas = new Canvas(radius);
             canvas.MouseClick += this.OnCanvasMouseClick;
 
@@ -55,10 +54,12 @@ namespace tobii_bench
         {
 
             Application.Run(optionsForm);
-            if (optionsForm.calibrate == true)
-            {
-                tracker.Calibrate();
-            }
+			//Commented out for now, but generaly this works
+            //tracker.Calibrate();
+            //if (optionsForm.calibrate == true)
+            //{
+            //    tracker.Calibrate();
+            //}
             this.drawError = optionsForm.display_error;
 
             //canvas.BringToFront();
